@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>社交网络分析系统 Pais </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script type="text/javascript" src="js/lib/jquery.js"></script>
+	<script type="text/javascript" src="js/lib/iscroll.js"></script>
+	<script type="text/javascript" src="js/lib/jquery.timetabs.min.js"></script>
+	<script type="text/javascript" src="js/lib/mustache.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="js/dist/echarts.js"></script>
+    <script type="text/javascript" src="js/dist/line.js"></script>
+    <script type="text/javascript" src="js/dist/force.js"></script>
+    <script type="text/javascript" src="js/dist/bar.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            genForwardChart("w");
+        });
+        function getNodesAndLinks(data) {
+            var nodes = [], links = [];
+            for(var i = 0,len = data.length;i < len;i++){
+                var item = data[i];
+                nodes.push({
+                    category: 0,
+                    name : item.uname
+
+                });
+                links.push({
+                    source: item.fathername,
+                    target: item.uname,
+                    weight: item.forwardnum,
+                    name: "转发"
+                });
+            }
+            return {
+                nodes: nodes,
+                links: links
+            }
+        }
+    function genForwardChart(topic){
+        var constMaxRadius = 10;
+        var constMinRadius = 5;
+        $.ajax({
+            url: "getForwardList.do",
+            data: {topic:topic},
+            // type: 'post',
+            dataType: 'json',
+            success: function(data){
+                var nodesAndLinks = getNodesAndLinks(data);
+                var nodes = nodesAndLinks.nodes;
+                if(nodes.length > 0) {
+                    nodes.push({
+                        name: topic,
+                        value: 10,
+                        symbolSize: [20, 20],
+                        category: 1,
+                        draggable:true
+                    });
+                }
+    var pathOption = {
+            animation: false,
+            tooltip : {
+                trigger: 'item',
+                show : false,
+                formatter: '{a} : {b}',
+                // formatter: function (params,ticket,callback){
+                //     console.log(params)
+                //     console.log(ticket)
+                // }
+            },
+            series : [
+                {
+                    type:'force',
+                    name : "topic",
+                    ribbonType: false,
+                    draggable: false,
+                    categories:[
+                        {name:"转发"},
+                        {
+                            name:"话题",
+                            itemStyle: {
+                                normal: {
+                                    color: "white",
+                                    borderColor: "rgba(0,180,255,1)",
+                                    borderWidth: 6
+                                    //color:"lightgreen",
+                                    //borderColor: "green"
+                                }
+                            }
+                        }
+                    ],
+                    itemStyle: {
+                        normal: {
+                            label: {
+                                show: false
+                            },
+                            nodeStyle : {
+                                brushType : 'both',
+                                borderColor : 'rgba(91,207,255,1)',
+                                borderWidth : 1,
+                                color: 'rgba(0,180,255,1)'
+                            }
+                        },
+                        emphasis: {
+                            label: {
+                                show: true
+                            },
+                            nodeStyle : {
+                                brushType : 'both',
+                                borderColor : 'rgba(255,240,0,1)',
+                                borderWidth : 2,
+                                color: 'rgba(255,168,0,1)'
+                            }
+                        }
+                    },
+                    minRadius : constMinRadius,
+                    maxRadius : constMaxRadius,
+                    linkSymbol: 'arrow',
+                    coolDown: 0.995,
+                    nodes : nodes,
+                    links : nodesAndLinks.links,
+                    steps: 1
+                }
+            ]
+        };
+    var myChartPath = ec.init(document.getElementById('path'), 'blue');
+    myChartPath.setOption(pathOption);
+    myChartPath.on(ecConfig.EVENT.CLICK, eConsole);
+            }
+        });
+    }
+    </script>
+</head>
+<body>
+	 <div id="path" style="z-index: 1;width:600px;height:320px;"></div>
+     <a href="javascript:;" class="path-btn path hide"><span>显示关键路径</span></a>
+     <a href="javascript:;" class="path-btn dom hide"><span>显示关键节点</span></a>
+</body>
+</html>

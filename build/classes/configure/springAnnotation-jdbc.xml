@@ -15,14 +15,14 @@
 			<value>com.mysql.jdbc.Driver</value>
 		</property>
 		<property name="jdbcUrl">
-			<value>jdbc:mysql://115.28.128.50:3306/tmp?useUnicode=true&amp;characterEncoding=UTF-8</value>
+			<value>jdbc:mysql://127.0.0.1:3306/tmp?useUnicode=true&amp;characterEncoding=UTF-8</value>
 			<!-- 121.42.137.47 - localhost-->
 		</property>
 		<property name="user">
 			<value>root</value>
 		</property>
 		<property name="password">
-			<value>aliyunNESv2Security</value>
+			<value>tianpan</value>
 			<!-- <value>root</value> -->
 		</property>
 		<property name="minPoolSize">

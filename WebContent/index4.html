@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/lib/jquery-2.1.4.min.js"></script>
+    <style>
+        #text{
+            width: 200px;
+            border: 1px solid #ccc;
+            overflow: hidden;
+            background-color: rgba(255,168,0,1);
+        }
+    </style>
+    <script>
+        $(function(){
+            var slideHeight = 92; // px
+            var text = $("#text");
+            var defHeight = text.height();
+            alert(defHeight);
+            if(defHeight >=slideHeight){
+                text.css('height' , slideHeight + 'px');
+                $('#read-more').append('<a href="#">点击查看更多。。</a>');
+                $('#read-more a').click(function(){
+                    var curHeight = text.height();
+                    if(curHeight == slideHeight){
+                        $('#text').animate({
+                            height: defHeight
+                        }, "normal");
+                        $('#read-more a').html('点击隐藏');
+                    }else{
+                        $('#text').animate({
+                            height: slideHeight
+                        }, "normal");
+                        $('#read-more a').html('点击查看更多。。');
+                    }
+
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="text">是滴是滴付出电视剧电视剧吃的啥催眠大师VC的v
+    dsjv平顶山开房间都是皮肤参加平顶山vjpds非常精辟电视剧产品电
+    视剧的vdcdsvcdvdsdsa大小姐吃的啥VC难道曾经多少超级电视女屌丝</div>
+<div id="read-more"></div>
+</body>
+</html>

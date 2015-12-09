@@ -24,6 +24,12 @@ public class EventAction {
 	public List<Event> getEventList(HttpServletRequest request, HttpServletResponse response, Model model)
 			throws Exception {
 		String topic = utils.StringUtils.getQueryParam(request.getParameter("topic"));
+		List<Event> events = eventService.getEventListByTopic(topic);
+		System.out.println("event start");
+		for(Event event:events){
+			System.out.println(event.getEvent()+":"+event.getEventcount()+","+event.getEventtime());
+		}
+		System.out.println("event end");
 		return  eventService.getEventListByTopic(topic);
 	}
 

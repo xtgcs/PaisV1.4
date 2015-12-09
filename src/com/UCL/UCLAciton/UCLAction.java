@@ -18,7 +18,6 @@ import java.util.List;
 public class UCLAction {
 	@Resource
 	UCLService uclService;
-
 	@RequestMapping("/getUCLList.do")
 	@ResponseBody
 	public List<Topic> getUCLList(HttpServletRequest request, HttpServletResponse response, Model model)

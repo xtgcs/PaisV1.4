@@ -32,6 +32,7 @@ public class UsersAction {
 	public User getUserInfo(HttpServletRequest request) {
 		String topic = utils.StringUtils.getQueryParam(request.getParameter("topic"));
 		String uname = utils.StringUtils.getQueryParam(request.getParameter("uname"));
+		System.out.println("topic:"+topic+",uanme:"+uname);
 		return userService.getByUname(topic,uname);
 	}
 }

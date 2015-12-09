@@ -12,12 +12,13 @@ import java.util.Date;
 public class StringUtils {
 
     public static String getQueryParam(String str) {
-        try {
-            return new String(str.getBytes("ISO-8859-1"), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return null;
-        }
+//        try {
+            //return new String(str.getBytes("ISO-8859-1"), "UTF-8");
+        	return str;
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
     }
 
     public static Calendar getCalendar(String str,String format) {

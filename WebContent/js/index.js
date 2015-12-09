@@ -1,12 +1,13 @@
 $(function(){
-
+	var weiboContent;
     var uclListUrl = "getUCLList.do",
         forwardListUrl = "getForwardList.do",
         userListUrl = "getUserList.do",
         trendListUrl = "getTrendList.do",
         userInfoUrl = "getUserInfo.do",
-        weiboListUrl = "getWeibo.do";
-
+        weiboListUrl = "getWeibo.do",
+        eventListUrl = "getEventList.do",
+        aspectListUrl = "getAspectList.do";
     $(document.documentElement).click(function(event){
         if(event.target.nodeName.toLowerCase()!="canvas"){
             $('.tip-wrap').addClass('hide');
@@ -14,21 +15,19 @@ $(function(){
     });
 
     //列表切换
-    $('dl#tabs1,dl#tabs2,dl#tabs3,dl#tabs4').addClass('enabled').timetabs({
+    $('dl#tabs1,dl#tabs2,dl#tabs3,dl#tabs4,dl#tabs5').addClass('enabled').timetabs({
         defaultIndex: 0,
         interval: 2000,
         continueOnMouseLeave: false,
         animated: 'fade',
         animationSpeed: 300
     });
-
     // 路径配置
     require.config({
         paths: {
-            echarts: 'http://echarts.baidu.com/build/dist'
+            echarts: 'dist/echarts'
         }
     });
-
     // 使用
     require(
         [
@@ -38,9 +37,8 @@ $(function(){
         ],
         function (ec) {
             var ecConfig = require('echarts/config');
-
             //UCL标签
-            $.getJSON(uclListUrl, function (data) {
+             $.getJSON(uclListUrl, function (data) {
                 var template = $('#uclTpl').html();
                 var html = Mustache.to_html(template, {'ucl': data});
                 var storeTopic = localStorage.getItem("topic");
@@ -51,13 +49,14 @@ $(function(){
                     }).filter(storeTopic ?  $('#ucl a:contains('+storeTopic+')') : ":first").attr("class", "active").text();
                 switchUCL($.trim(topic));
             });
-
-            //切换ucl
+         
             function switchUCL(topic){
                 genForwardChart(topic);
                 genTrendChart(topic);
                 genUserList(topic);
                 genWeiboList(topic);
+                genEventList(topic);
+                genaspect(topic);
                 localStorage.setItem("topic",topic);
             }
 
@@ -86,7 +85,7 @@ $(function(){
                             animation: false,
                             tooltip : {
                                 trigger: 'item',
-                                show : false,
+                                show : true,
                                 formatter: '{a} : {b}'
                                 // formatter: function (params,ticket,callback){
                                 //     console.log(params)
@@ -105,6 +104,13 @@ $(function(){
                                             name:"话题",
                                             itemStyle: {
                                                 normal: {
+                                                    label:{
+                                                     show:true,
+                                                        textStyle: {
+                                                            color: '#333',
+                                                            fontSize:'12px'
+                                                        }
+                                                    },
                                                     color: "white",
                                                     borderColor: "rgba(0,180,255,1)",
                                                     borderWidth: 6
@@ -154,7 +160,6 @@ $(function(){
                     }
                 });
             }
-
             //影响力排名
             function genUserList(topic){
                 $.ajax({
@@ -163,17 +168,19 @@ $(function(){
                     // type: 'post',
                     dataType: 'json',
                     success: function(data) {
+                    	weiboContent = data;
                         var template = $('#effectTpl').html();
                         for (var i = 0; i < data.length; i++) {
                             var item = data[i];
                             item.topiceffect = getStar(item.topiceffect);
-                        }
+                            item.socialeffect = getStar(item.socialeffect);
+                            item.aspect = getAspect(item.aspect);
+                          }
                         var html = Mustache.to_html(template, {'effects': data});
                         $('#effectList').html(html);
                     }
                 });
             }
-
             //用户列表
             function genWeiboList(topic) {
                 $.ajax({
@@ -192,15 +199,12 @@ $(function(){
                     }
                 });
             }
-
             function getAspect(aspect) {
                 var strs = ["负面","中性","正面"];
                 return strs[aspect + 1];
             }
-
             //话题传播数量趋势
             function genTrendChart(topic){
-                //话题传播数量趋势
                 $.ajax({
                     url: trendListUrl,
                     data: {topic:topic},
@@ -214,8 +218,16 @@ $(function(){
                             }
                         }
                         var spreadOption = {
+                            title:{
+                                show:true,
+                                x:'center',
+                                text:'话题微博转发量'
+                            },
+
                             tooltip : {
-                                trigger: 'axis'
+                                trigger: 'axis',
+                                show:true,
+                                showContent:true
                             },
                             calculable : false,
                             xAxis : [
@@ -249,17 +261,277 @@ $(function(){
                                         ]
                                     }
                                 }
+                                //{
+                                //	name:"正面态度最高值",
+                                //	type:"line",
+                                //	data:data2.data1,
+                                //	markPoint : {
+                                //        data : [
+                                //            {type : 'max', name: '支持用户数量'}
+                                //        ]
+                                //    },
+                                //    markLine : {
+                                //        data : [
+                                //            {type : 'average', name: '支持用户均值'}
+                                //        ]
+                                //    }
+                                //},{
+                                //	name:"中立态度最高值",
+                                //	type:"line",
+                                //	data:data2.data2,
+                                //	markPoint : {
+                                //        data : [
+                                //            {type : 'max', name: '中立用户数量'}
+                                //        ]
+                                //    },
+                                //    markLine : {
+                                //        data : [
+                                //            {type : 'average', name: '中立用户均值'}
+                                //        ]
+                                //    }
+                                //},{
+                                //	name:"反对态度最高值",
+                                //	type:"line",
+                                //	data:data2.data3,
+                                //	markPoint : {
+                                //        data : [
+                                //            {type : 'max', name: '反对态度用户数量'}
+                                //        ]
+                                //    },
+                                //    markLine : {
+                                //        data : [
+                                //            {type : 'average', name: '反对用户均值'}
+                                //        ]
+                                //    }
+                                //}
                             ]
                         };
-
                         // 为echarts对象加载数据
                         ec.init(document.getElementById('number'), 'macarons').setOption(spreadOption);
                     }
                 });
-
             }
+            //话题舆论你走势
+            function genaspect(topic){
+                //话题舆论走势
+                var data2;
+                $.ajax({
+                    url: aspectListUrl,
+                    data: {topic:topic},
+                    asny:false,
+                    dataType: 'json',
+                    success: function(data){
+                        data2 = data;
+                        var spreadOption = {
+                            title:{
+                                show:true,
+                                x:'center',
+                                text:'话题舆论走势'
+                            },
 
+                            tooltip : {
+                                trigger: 'axis',
+                                show:true,
+                                showContent:true
+                            },
+                            calculable : false,
+                            xAxis : [
+                                {
+                                    type : 'category',
+                                    boundaryGap : false,
+                                    data : data.forwardtime
+                                }
+                            ],
+                            yAxis : [
+                                {
+                                    type : 'value',
+                                    axisLabel : {
+                                        formatter: '{value}'
+                                    }
+                                }
+                            ],
+                            series : [
+                                {
+                                    name:"正面态度最高值",
+                                    type:"line",
+                                    data:data2.data1,
+                                    itemStyle: {
+                                        normal: {
+                                          color:'rgba(0,180,255,1)'
+                                    }
+                                 }
+                                    //markPoint : {
+                                    //    data : [
+                                    //        {type : 'max', name: '支持用户数量'}
+                                    //    ]
+                                    //},
+                                    //markLine : {
+                                    //    data : [
+                                    //        {type : 'average', name: '支持用户均值'}
+                                    //    ]
+                                    //}
+                                }, {
+                                    name: "中立态度最高值",
+                                    type: "line",
+                                    data: data2.data2,
+                                    itemStyle: {
+                                        normal: {
+                                            color: 'rgba(105,105,105,1)'
+                                        }
+                                        //markPoint: {
+                                        //    data: [
+                                        //        {type: 'max', name: '中立用户数量'}
+                                        //    ]
+                                        //},
+                                        //markLine: {
+                                        //    data: [
+                                        //        {type: 'average', name: '中立用户均值'}
+                                        //    ]
+                                        //}
+                                    }
+                                },
+                                {
+                                    name: "反对态度最高值",
+                                    type: "line",
+                                    data: data2.data3,
+                                    itemStyle: {
+                                        normal: {
+                                            color: 'rgba(255,168,0,1)'
 
+                                        }
+                                        //markPoint: {
+                                        //    data: [
+                                        //        {type: 'max', name: '反对态度用户数量'}
+                                        //    ]
+                                        //},
+                                        //markLine: {
+                                        //    data: [
+                                        //        {type: 'average', name: '反对用户均值'}
+                                        //    ]
+                                        //}
+                                    }
+                                }
+                            ]
+                        };
+                        // 为echarts对象加载数据
+                        ec.init(document.getElementById('number3'), 'macarons').setOption(spreadOption);
+                    }
+                });
+            }
+            var timeArray ;
+            var eventCountArray;
+            var eventArray;
+            function generatData(data){
+            	timeArray = new Array();
+            	eventCountArray = new Array();
+            	eventArray = new Array();
+            	for(var i = 0;i < data.length;i++){
+            		timeArray[i] = data[i].eventtime;
+            		eventCountArray[i] = data[i].eventcount;
+            		eventArray[i] = data[i].event;
+            	}
+            }
+            //话题车厢
+            function genEventList(topic){
+                //话题车厢
+                $.ajax({
+                    url: eventListUrl,
+                    data: {topic:topic},
+                    // type: 'post',
+                    dataType: 'json',
+                    success: function(data){
+                        //eventData = data;
+                    	generatData(data);
+                        var trendData = data.data;
+                        if(trendData){
+                            for(var i = 0,len = trendData.length;i<len;i++) {
+                                trendData[i] = (Math.log(trendData[i])/Math.log(10)).toFixed(2);
+                            }
+                        }
+                        var spreadOption = {
+                            title:{
+                                show:true,
+                                x:'center',
+                                text:'话题车厢'
+                            },
+
+                            tooltip : {
+                                show:true,
+                                showContent:true
+                            },
+                            calculable : false,
+                            xAxis : [
+                                {
+                                    type : 'category',
+                                    boundaryGap : false,
+                                    data : timeArray
+                                }
+                            ],
+                            yAxis : [
+                                {
+                                    type : 'value',
+                                    axisLabel : {
+                                        formatter: '{value}'
+                                    }
+                                }
+                            ],
+                            series : [
+                                {
+                                    name:'数量',
+                                    type:'line',
+                                    data: eventCountArray,
+                                    itemStyle: {
+                                        normal: {
+                                            //label: {
+                                            //    show: true
+                                            //},
+                                            nodeStyle : {
+                                                brushType : 'both',
+                                                borderColor : 'rgba(91,207,255,1)',
+                                                borderWidth : 1,
+                                                color: 'rgba(0,180,255,1)'
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    name:'话题事件',
+                                    type:'line',
+                                    data: eventArray,
+                                    itemStyle: {
+                                        normal: {
+                                            label: {
+                                                show: true,
+                                                formatter: function (data){
+                                                    return data.data
+                                                },
+                                                position: 'top',
+                                                textStyle: {
+                                                    color: 'red',
+                                                    fontSize: '14',
+                                                    fontFamily: '微软雅黑',
+                                                    fontWeight:'bolder'
+                                                }
+                                            }
+                                            }
+                                        },
+                                            nodeStyle : {
+                                                brushType : 'both',
+                                                borderColor : 'rgba(91,207,255,1)',
+                                                borderWidth : 1,
+                                                color: 'rgba(0,180,255,1)'
+                                            }
+
+                                }
+                            ]
+                        };
+                        // 为echarts对象加载数据
+                        ec.init(document.getElementById('number1'), 'macarons').setOption(spreadOption);
+                    }
+                });
+                //
+                
+            }
             function getStar(data){
                 data = parseInt(data);
                 switch(data){
@@ -279,11 +551,26 @@ $(function(){
                         return null;
                 }
             }
-
+            function getColorByItem(item){
+                var color = " rgba(255,168,0,1)";//负面
+                //中立
+                if(item.aspect == 0)
+                	color = "rgba(105,105,105,1)";
+                //正面
+                else if(item.aspect == 1)
+                	color = "rgba(0,180,255,1)";
+                return color;
+            }
+            //浮动窗口显示的内容
+            function getContentByItem(obj){
+            	
+            	 
+            }
             function eConsole(param) {
+
                 $.ajax({
                     url : userInfoUrl,
-                    data: {uname: param.data.name},
+                    data: {topic:param.name,uname: param.data.name},
                     dataType : 'json',
                     success: function(data){
                         if(data) {
@@ -302,16 +589,34 @@ $(function(){
                     }
                 });
             }
-
             function getNodesAndLinks(data) {
                 var nodes = [], links = [];
                 for(var i = 0,len = data.length;i < len;i++){
                     var item = data[i];
+                    var color = getColorByItem(item);
+                    var content = getContentByItem(item);
                     nodes.push({
+                    	name : item.uname,
                         category: 0,
-                        name : item.uname
+                        label:'xx',
+                        itemStyle: {
+                            normal: {
+                            	 brushType : 'both',
+                                 borderColor : 'rgba(91,207,255,1)',
+                                 borderWidth : 1,
+                                 color:color
+                            },
+                            emphasis: {
+                                    
+                                     brushType : 'both',
+                                     borderColor : 'rgba(255,240,0,1)',
+                                     borderWidth : 2,
+                                     color: 'rgba(255,168,0,1)'
+                            }
+                        },
+                        
+                        
                     });
-
                     links.push({
                         source: item.fathername,
                         target: item.uname,
@@ -326,4 +631,4 @@ $(function(){
             }
         }
     );
-});
+    });
