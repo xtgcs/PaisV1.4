@@ -37,16 +37,6 @@
                                 </script>
                             </ul>
                         </dd>
-                        <%--<dt>话题车厢</dt>--%>
-                            <%--<dd class="active" style="z-index: 1;">--%>
-                                 <%--<ul id="event"  style="overflow-y:auto">--%>
-                                    <%--<script id="eventTpl" type="text/template">--%>
-                                     <%--{{#ucl}}--%>
-                                         <%--<li><a href="javascript:;" class="{{active}}"><i></i>{{topic}}</a></li>--%>
-                                     <%--{{/ucl}}--%>
-                                     <%--</script>--%>
-                                    <%--</ul>--%>
-                             <%--</dd>--%>
                     </dl>
                 </div>
                 <!-- 人际关系网 -->
@@ -107,9 +97,9 @@
             </div>
             <div class="bottom-wrap">
                 <dl class="tabs enabled" id="tabs3">
-                    <dt class="active">话题传播数量趋势<!--<i></i>--></dt>
+                    <dt class="active">话题传播数量趋势<i></i></dt>
                     <dd class="active" id="number" style="z-index: 1;height:213px"></dd>
-                     <dt class="active">话题舆论走势<!--<i></i>--></dt>
+                     <dt class="active">话题舆论走势<i></i></dt>
                     <dd class="active" id="number3" style="z-index: 1;height:213px;width:980px"></dd>
                     <dt>话题车厢</dt>
                      <dd class="active" id="number1" style="z-index: 1;height:213px;width:980px"></dd>
