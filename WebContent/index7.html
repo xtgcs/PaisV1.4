@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/lib/jquery-2.1.4.min.js"></script>
+</head>
+<script>
+
+//    $(".btn").click(function(){
+//        $("#d").attr("href",id);
+//    });
+//    var pointData = [];
+//    for(var i = 0;i < timeArray.length; i++ ){
+//        if(eventArray[i]){
+//            var json =  {name: '标注' + i, value: eventArray[i], xAxis: timeArray[i], yAxis: trendData[i]};
+//            pointData.push(json);
+//        }
+//    }
+//
+//
+//    var spreadOption = {
+//        title:{
+//            show:true,
+//            x:'center',
+//            text:'话题车厢'
+//        },
+//
+//        tooltip : {
+//            show:true,
+//            formatter: '{a}:{c}'
+//        },
+//        calculable : false,
+//        xAxis : [
+//            {
+//                type : 'category',
+//                boundaryGap : false,
+//                data : timeArray,
+//                axisLabel:{
+//                    show:false,
+//                    interval:function(index){
+//                        var d = data[index].flag;
+//                        if(d==1){
+//                            return true;
+//                        }
+//                        return false;
+//                    }
+//
+//                }
+//            }
+//        ],
+//        yAxis : [
+//            {
+//                type : 'value',
+//                axisLabel : {
+//                    formatter: '{value}'
+//                }
+//            }
+//        ],
+//        series : [
+//
+//            {
+//                name:'数量',
+//                type:'line',
+//                data: eventCountArray,
+//                symbolSize:0,
+//            },
+//            {
+//                name:'话题事件',
+//                type:'line',
+//                data:eventArray,
+//                symbolSize:0,
+//                markPoint:{
+//                    data:pointData,
+//                    symbolSize:50,
+//                    symbol:'image://images/dialog.png',
+//                    itemStyle:{
+//                        normal:{
+//                            label:{
+//                                distance:5,
+//                                show:true,
+//                                formatter: function (data) {
+//                                    var dataLen = data.value.length/2;
+//                                    if(dataLen > 3){
+//                                        var str = data.value.substr(0,Math.floor(dataLen)) + '\n' +data.value.substr(Math.floor(dataLen))
+//                                    }else {
+//                                        str = data.value;
+//                                    }
+//                                    return data.data.xAxis + '\n' + str + '\n' + '\n' + '\n' + '\n';
+//                                },
+//                                textStyle: {
+//                                    color:'#fff',
+//                                    fontSize: '4',
+//                                    fontFamily: '微软雅黑',
+//                                    fontWeight:'bolder'
+//                                }
+//                            }
+//                        }
+//                    }
+//                },
+//                itemStyle: {
+//                    normal: {
+//                        label: {
+//                            show: true,
+//                            formatter: function (data) {
+//                                return data.data.xAxis
+//                            },
+//                            textStyle: {
+//                                color:'red',
+//                                fontSize: '10',
+//                                fontFamily: '微软雅黑',
+//                                fontWeight:'bolder'
+//                            }
+//                        }
+//                    }
+//                }
+//
+//            }
+//
+//        ]
+//    };
+//
+ $("#btn").click(function(){
+     $("#d").attr("href","www.baidu.com");
+ })
+</script>
+<body>
+<button id="btn">设置</button>
+<a id="d" href="#capo">超链接</a>
+</body>
+</html>

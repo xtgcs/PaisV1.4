@@ -18,14 +18,13 @@ public class UsersDaoImpl extends BaseDao implements UsersDao {
 	@Override
 	public List<User> getUserListByTopic(String topic,int size) {
 		String sql = "select * from user3 u,effect e,forward3 f where e.topic='"+topic+"' and e.uid = u.uid and f.uname = u.uname and f.fathername = '"+topic+"' order by e.topiceffect desc limit " + size;
-		System.out.println("getUserListByTopic:"+sql);
+		System.out.println("查询指定用户"+sql);
 		return this.jdbcTemplate.query(sql,maps);
 	}
 
 	@Override
 	public User getByUname(String topic, String uname) {
-		String sql = "select * from user3 u,effect e,forward3 f where u.uname='" + uname + "' and e.topic='"+topic+"' and e.uid = u.uid and f.uname = u.uname and f.fathername = '"+topic+"'";
-		System.out.println("===================sql================"+sql);
+		String sql = "select * from user3 u,effect e,forward3 f where u.uname='" + uname + "' and e.uid = u.uid and f.uname = u.uname and f.topic = '"+topic+"'";
 		List<User> userList = this.jdbcTemplate.query(sql,maps);
 		return userList.size() > 0 ? userList.get(0) : null;
 	}
@@ -55,6 +54,8 @@ public class UsersDaoImpl extends BaseDao implements UsersDao {
 			user.setTopiceffect(rs.getDouble("topiceffect"));
 			user.setSocialeffect(rs.getDouble("socialeffect"));
 			user.setForwardnum(rs.getInt("forwardnum"));
+			user.setForwardText(rs.getString("forwardtext"));
+			user.setId(rs.getInt(20));
 			user.setAspect(rs.getInt("aspect"));
 			return user;
 		}

@@ -21,6 +21,13 @@ public class User {
 	
 	private int forwardnum;
 	private int aspect;
+	private String forwardText;
+	public String getForwardText() {
+		return forwardText;
+	}
+	public void setForwardText(String forwardText) {
+		this.forwardText = forwardText;
+	}
 	public int getId() {
 		return id;
 	}

@@ -32,7 +32,7 @@ public class ForwardAction {
 	public List<Forward> getForwardList(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 		String topic = StringUtils.getQueryParam(request.getParameter("topic"));
 
-		return forwardService.getForwardListByTopic(topic,100);
+		return forwardService.getForwardListByTopic(topic,400);
 	}
 
 }

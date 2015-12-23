@@ -29,6 +29,7 @@ public class EventDaoImpl extends BaseDao implements EventDao {
 				event.setEvent(rs.getString("event"));
 				event.setEventcount(rs.getInt("eventcount"));
 				event.setEventtime(rs.getString("eventtime"));
+				event.setFlag(rs.getInt("flag"));
 				return event;
 			}
 		};

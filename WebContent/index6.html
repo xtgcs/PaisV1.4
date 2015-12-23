@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <title>无标题文档</title>
+    <script type="text/javascript" src="js/lib/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/dist/highcharts.js"></script>
+    <style>
+
+
+    </style>
+</head>
+<script type="text/javascript">
+$(function () {
+    $('#container').highcharts({
+
+        title: {
+            text: 'Annual precipitation'
+        },
+
+        subtitle: {
+            text: 'Highcharts data labels with callout shape'
+        },
+
+        xAxis: {
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        },
+
+        plotOptions: {
+            series: {
+                dataLabels: {
+                    shape: 'callout',
+                    width:'100px',
+                    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+                    style: {
+                        color: 'red',
+                        textShadow: 'none'
+
+                    }
+                }
+            }
+        },
+
+        series: [{
+            data: [{
+                y: 29.9,
+                dataLabels: {
+                    enabled: true,
+                    format: 'January<br><span style="font-size: 1.3em;color:yellow;width: 100px;display: block">第二届世界互联网大会浙江乌镇举办</span>',
+                    verticalAlign: 'bottom',
+                    y: -20
+                }
+            }, {
+                y: 91.5,
+                dataLabels: {
+                    enabled: true,
+                    format: 'January<br><span style="font-size: 1.3em;color:yellow;">Dryest</span>',
+                    verticalAlign: 'bottom',
+                    y: -20
+                }
+            }, {
+                y: 106.4
+            }, {
+                y: 129.2
+            }, {
+                y: 144.0
+            }, {
+                y: 176.0
+            }, {
+                y: 135.6
+            }, {
+                y: 148.5
+            }, {
+                y: 216.4,
+                dataLabels: {
+                    enabled: true,
+                    format: 'September<br><span style="font-size: 1.3em;display: inline-block;width: 100px;height: 50px">北京清华大厦计算机科技大楼</span>',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    x: -35
+
+                }
+            }, {
+                y: 194.1
+            }, {
+                y: 95.6
+            }, {
+                y: 54.4
+            }]
+        }]
+    });
+});
+</script>
+<body>
+<div class="box" id="container" style="width:1000px;height:500px"></div>
+</body>
+</html>

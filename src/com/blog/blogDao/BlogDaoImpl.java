@@ -1,6 +1,7 @@
 package com.blog.blogDao;
 
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class BlogDaoImpl extends BaseDao implements BlogDao {
 	public List<Blog> getBlogListByTopic(String topic) {
 		// TODO Auto-generated method stub
 		String sql = "select * from forward3 f,user3 u,effect e where f.fathername = '"+topic+"' and  e.uid = u.uid and f.uname = u.uname";
+		System.out.println("get weiboList.do ============sql========="+sql);
 		return this.jdbcTemplate.query(sql, maps);
 	}
 	private ParameterizedRowMapper<Blog> maps = new ParameterizedRowMapper<Blog>() {
@@ -34,6 +36,7 @@ public class BlogDaoImpl extends BaseDao implements BlogDao {
 			blog.setPraisenum(rs.getInt("praisenum"));
 			blog.setCommentnum(rs.getInt("commentnum"));
 			blog.setForwardtime(rs.getString("forwardtime"));
+			blog.setId(rs.getInt(1));
 			return blog;
 		}
 	};

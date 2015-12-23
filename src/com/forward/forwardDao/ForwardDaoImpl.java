@@ -43,6 +43,7 @@ public class ForwardDaoImpl extends BaseDao implements ForwardDao {
 			forward.setForwardnum(rs.getInt("forwardnum"));
 			forward.setForwardtime(rs.getString("forwardtime"));
 			forward.setAspect(rs.getInt("aspect"));
+			forward.setTopic(rs.getString("topic"));
 			return forward;
 		}
 	};

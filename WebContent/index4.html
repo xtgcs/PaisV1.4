@@ -2,22 +2,68 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>查看全文</title>
     <script src="js/lib/jquery-2.1.4.min.js"></script>
     <style>
-        #text{
-            width: 200px;
+        *{margin: 0;padding: 0;}
+        .box{
+            width: 600px;
+            height: 400px;
+            background-color: #cccccc;
             border: 1px solid #ccc;
+            margin: 100px auto;
+        }
+        .title{
+            width: 300px;
+            height: 50px;
+            border: 1px solid #ccc;
+            font-weight: bold;
+            font-size: 20px;
+            margin: 50px auto;
+            text-align: center;
+        }
+        .wrap{
+            width: 300px;
+            height: 200px;
+            margin: 10px auto;
+            background-color: #fff;
+        }
+        .text{
+            width: 278px;
+            border: 1px solid #ccc;
+            border-bottom:none;
             overflow: hidden;
-            background-color: rgba(255,168,0,1);
+            font-size: 14px;
+            font-weight: bold;
+            color: darkorange;
+            background-color: #fff;
+            padding: 10px;
+        }
+        .btn{
+            width: 290px;
+            background-color: #fff;
+            padding-left: 10px;
+        }
+        .btn a{
+            font-size: 14px;
+            font-weight: bold;
+            color: rgba(255,168,0,1);
+        }
+        #di{
+
+            width: 100px;
+            height: 299px;
+            border: 1px solid red;
+        }
+        .t{
+            background-color: green;
         }
     </style>
     <script>
         $(function(){
-            var slideHeight = 92; // px
+            var slideHeight = 87; // px
             var text = $("#text");
             var defHeight = text.height();
-            alert(defHeight);
             if(defHeight >=slideHeight){
                 text.css('height' , slideHeight + 'px');
                 $('#read-more').append('<a href="#">点击查看更多。。</a>');
@@ -27,7 +73,7 @@
                         $('#text').animate({
                             height: defHeight
                         }, "normal");
-                        $('#read-more a').html('点击隐藏');
+                        $('#read-more a').html('点击收起');
                     }else{
                         $('#text').animate({
                             height: slideHeight
@@ -38,12 +84,22 @@
                 });
             }
         });
+
     </script>
-</head>
+
 <body>
-<div id="text">是滴是滴付出电视剧电视剧吃的啥催眠大师VC的v
-    dsjv平顶山开房间都是皮肤参加平顶山vjpds非常精辟电视剧产品电
-    视剧的vdcdsvcdvdsdsa大小姐吃的啥VC难道曾经多少超级电视女屌丝</div>
-<div id="read-more"></div>
+<div class="box">
+    <div class="title">查看全文案例演示</div>
+    <div class="wrap">
+        <div class="text" id="text" onload="add()">是滴是滴付出电视剧电视剧吃的啥催眠大师VC的v
+            平顶山开房间都是皮肤参加平顶山非常精辟电视剧产品电
+            视剧的大小姐吃的啥VC难道曾经多少超级电视女屌丝是滴是滴付出
+            电视剧电视剧吃的啥催眠大师VC的v
+            平顶山开房间都是皮肤参加平顶山非常精辟电视剧产品电
+            视剧的大小姐吃的啥VC难道曾经多少超级电视女屌丝
+        </div>
+        <div class="btn" id="read-more"></div>
+    </div>
+</div>
 </body>
 </html>

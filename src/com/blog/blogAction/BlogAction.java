@@ -27,6 +27,10 @@ public class BlogAction {
 		List<Blog> bloglist = new ArrayList<Blog>();
 		bloglist = blogService.getBlogListByTopic(topic);
 //		System.out.println("weibo list:"+bloglist.get(0).getForwardnum());
+		for(Blog blog:bloglist){
+			
+			System.out.println("=========blog============="+blog);
+		}
 		return bloglist;
 	}
 

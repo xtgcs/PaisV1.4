@@ -1,5 +1,7 @@
 package com.bean;
 
+import java.util.Arrays;
+
 public class Blog {
 	private int id;
 	private String topic;
@@ -10,6 +12,13 @@ public class Blog {
 	private double topiceffect;
 	private int forwardnum;
 	private int praisenum;
+	@Override
+	public String toString() {
+		return "Blog [id=" + id + ", topic=" + topic + ", uname=" + uname + ", headpic=" + Arrays.toString(headpic)
+				+ ", headpicsrc=" + headpicsrc + ", socialeffect=" + socialeffect + ", topiceffect=" + topiceffect
+				+ ", forwardnum=" + forwardnum + ", praisenum=" + praisenum + ", commentnum=" + commentnum
+				+ ", forwardtime=" + forwardtime + ", blog=" + blog + ", aspect=" + aspect + "]";
+	}
 	private int commentnum;
 	private String forwardtime;
 	private String blog;

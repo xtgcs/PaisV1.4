@@ -7,7 +7,7 @@ public class Event {
 	private String event;
 	private String eventtime;
 	private int eventcount;
-	
+	private int flag;
 	public int getId() {
 		return id;
 	}
@@ -38,6 +38,12 @@ public class Event {
 	}
 	public void setEventcount(int eventcount) {
 		this.eventcount = eventcount;
+	}
+	public int getFlag() {
+		return flag;
+	}
+	public void setFlag(int flag) {
+		this.flag = flag;
 	}
 	
 }

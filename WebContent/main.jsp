@@ -6,10 +6,8 @@
     <meta charset="utf-8">
     <title>社交网络分析系统 Pais </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <!-- Le styles -->
     <link href="css/index.css" rel="Stylesheet"/>
-
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
     <script src="js/lib/html5shiv.js"></script>
@@ -41,15 +39,15 @@
                 </div>
                 <!-- 人际关系网 -->
                 <div class="top-right-cont" style="position:relative;">
-                    <dl class="tabs enabled" id="tabs2">
-                        <dt class="active">传播路径<!--<i></i>--></dt>
-                        <dd class="active">
+                    <dl class="tabs" id="tabs2">
+                        <dt class="active" id="pass">传播路径<i></i></dt>
+                        <dd class="active" id="pass1">
                             <div id="path" style="z-index: 1;width:600px;height:320px;"></div>
                             <a href="javascript:;" class="path-btn path hide"><span>显示关键路径</span></a>
                             <a href="javascript:;" class="path-btn dom hide"><span>显示关键节点</span></a>
                         </dd>
-                        <dt>话题微博</dt>
-                        <dd>
+                        <dt id="show">话题微博</dt>
+                        <dd id="show1">
                             <div id="weiboList" style="z-index: 1;width:600px;height:320px;overflow-y: auto;"></div>
                             <script id="weiboTpl" type="text/template">
                             {{#weibo}}
@@ -57,20 +55,24 @@
                                 <div class="WB_feed_detail clearfix">
                                     <div class="WB_face W_fl">
                                          <div class="face">
-                                            <img title="{{uname}}" alt="" width="50" height="50" src="{{headpicsrc}}" class="W_face_radius"></div>
-                                         </div>
+                                            <img title="{{uname}}" alt="" width="50" height="50" src="{{headpicsrc}}" class="W_face_radius">
+                                        </div>
+                                    </div>
                                     <div class="WB_detail">
                                         <div class="WB_info">
-                                            <a target="_blank" class="W_f14 W_fb S_txt1" title="{{uname}}">
-                                            {{uname}}</a>
+                                            <a target="_blank" class="W_f14 W_fb S_txt1" id="name"  name="{{id}}" title="{{uname}}">
+                                            {{uname}}
+                                            </a>
                                         </div>
-                                        <div id="text" class="WB_text W_f14">{{blog}}</div>
-                                            <span class="W-f14-btn" id="WB-text"  onclick="gettext()">查看全文</span>
+
+                                        <a  class="WB_text W_f14"   id="{{id}}">{{blog}}</a>
+                                            <span class="W-f14-btn"></span>
 
                                         <div class="WB_from S_txt2">
-                                            <span>{{forwardtime}}</span> &nbsp; &nbsp;<i>{{aspect}}</i></div>
-                                         </div>
-                                </div>
+                                            <span>{{forwardtime}}</span> &nbsp; &nbsp;<i>{{aspect}}</i>
+                                        </div>
+                                    </div>
+                                 </div>
                                 <div class="WB_feed_handle">
                                     <div class="WB_handle">
                                         <ul class="WB_row_line WB_row_r4 clearfix S_line2">
@@ -86,7 +88,6 @@
                                         </ul>
                                     </div>
                                     <div node-type="feed_list_repeat" class="WB_feed_repeat S_bg1" style="display:none;"></div>
-
                                 </div>
                             </div>
                             {{/weibo}}
@@ -98,11 +99,12 @@
             <div class="bottom-wrap">
                 <dl class="tabs enabled" id="tabs3">
                     <dt class="active">话题传播数量趋势<i></i></dt>
-                    <dd class="active" id="number" style="z-index: 1;height:213px"></dd>
+                    <dd class="active" id="number" style="z-index: 1;height:213px;width:980px"></dd>
                      <dt class="active">话题舆论走势<i></i></dt>
                     <dd class="active" id="number3" style="z-index: 1;height:213px;width:980px"></dd>
                     <dt>话题车厢</dt>
                      <dd class="active" id="number1" style="z-index: 1;height:213px;width:980px"></dd>
+
                 </dl>
             </div>
         </div>
@@ -119,11 +121,13 @@
                 <script id="effectTpl" type="text/template">
                     {{#effects}}
                     <li class ="{{grey}}">
+                      <a href="#" class="btn" onclick="getID()">
                         <div class="photo-wrap">
                             <img src="{{headpicsrc}}" width="48" height="48">
                             <span>{{uname}}</span>
                         </div>
                         <div class="effect-wrap">
+                         <input type="hidden" value="{{id}}" id="iptID">
                             <div class="effect-cont">
                                 <div class="grid">
                                     <span>粉丝</span>
@@ -139,7 +143,7 @@
                                 </div>
                             </div>
                             <div class="effect-star">
-                                <span>话题影响力</span>
+                                <span> 话题影响力</span>
                                 <div class="rating">
                                     <div class="star {{topiceffect}}"></div>
                                 </div>
@@ -150,12 +154,14 @@
                                 </div>
                                 <div class="attitude">
                                  <span>
-                                 <a class="S_txt2"  href="javascript:void(0);"><span class="pos"><span class="line S_line1">转发数量 &nbsp;{{forwardnum}}</span></span></a>
+                                 <div class="S_txt2"><span class="pos"><span class="line S_line1">转发数量 &nbsp;{{forwardnum}}</span></span></div>
                                  </span>
                                 </div>
                              </div>
                           </div>
+                          </a>
                     </li>
+
                     {{/effects}}
                 </script>
             </div>
@@ -202,28 +208,60 @@
             <div class="star {{socialeffect}}"></div>
         </div>
     </div>
-    <div class="effect-star">
-        <span>话题态度</span>
-        <div class="rating">
-            <div class="star nostar"></div>
+    <div class="weibo-box">
+        <span>微博摘要</span>
+        <div class="weibo-content-wrap">
+         <div class="weibo-content">{{forwardText}}</div>
+        <input type="hidden" value="{{id}}" id="ID">
+        <a  href="" class="btn" onclick="get()" id="findAll">查看全文</a>
         </div>
     </div>
     {{/user}}
     {{/tooltip}}
 </script>
+        <%--<div class="box hide" id="box"></div>--%>
+        <%--<script id="boxTpl" type="text/template">--%>
+        <%--{{#box}}--%>
+        <%--{{#event}}--%>
+        <%--<div class="event-wrap">--%>
+        <%--<div class="event-time">{{eventtime}}</div>--%>
+        <%--<div class="event">{{event}}</div>--%>
+        <%--</div>--%>
+        <%--{{/event}}--%>
+        <%--{{/box}}--%>
+        <%--</script>--%>
 <script type="text/javascript" src="js/lib/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="js/lib/iscroll.js"></script>
 <script type="text/javascript" src="js/lib/jquery.timetabs.min.js"></script>
 <script type="text/javascript" src="js/lib/mustache.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
 <script type="text/javascript" src="js/dist/echarts.js"></script>
-    <script type="text/javascript" src="js/dist/line.js"></script>
+        <script type="text/javascript" src="js/dist/line.js"></script>
     <script type="text/javascript" src="js/dist/force.js"></script>
-    <script type="text/javascript" src="js/dist/bar.js"></script>
+        <script type="text/javascript" src="js/dist/bar.js"></script>
     <script type="text/javascript">
-        function gettext(){
-          $("#text").css("height","auto");
-          $("#WB-text").text("收起");
+       function get(){
+        var id = $("#ID").val();
+        var data = "#"+id;
+        $("#findAll").attr("href",data);
+        change();
+        }
+        function getID(){
+        change();
+        }
+        function change(){
+        var show=$("#show");
+        var pass=$("#pass");
+        show.addClass("active");
+        pass.removeClass();
+        $("#pass1").removeClass().attr("style","z-index:0").attr("style","display:none");
+        $("#show1").addClass("active").attr("style","z-index:1;display:block");
+        pass.click(function(){
+        $(this).addClass("active");
+        $("#show").removeClass();
+        $("#show1").removeClass().attr("style","z-index:0").attr("style","display:none");
+        $("#pass1").addClass("active").attr("style","z-index:1;display:block");
+        })
         }
         </script>
 </body>
