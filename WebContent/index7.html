@@ -1,131 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <script src="js/lib/jquery-2.1.4.min.js"></script>
-</head>
-<script>
+    <meta charset="utf-8"/>
+    <title>自动滚动</title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <script type="text/javascript" src="js/lib/jquery-2.1.4.min.js"></script>
 
-//    $(".btn").click(function(){
-//        $("#d").attr("href",id);
-//    });
-//    var pointData = [];
-//    for(var i = 0;i < timeArray.length; i++ ){
-//        if(eventArray[i]){
-//            var json =  {name: '标注' + i, value: eventArray[i], xAxis: timeArray[i], yAxis: trendData[i]};
-//            pointData.push(json);
-//        }
-//    }
-//
-//
-//    var spreadOption = {
-//        title:{
-//            show:true,
-//            x:'center',
-//            text:'话题车厢'
-//        },
-//
-//        tooltip : {
-//            show:true,
-//            formatter: '{a}:{c}'
-//        },
-//        calculable : false,
-//        xAxis : [
-//            {
-//                type : 'category',
-//                boundaryGap : false,
-//                data : timeArray,
-//                axisLabel:{
-//                    show:false,
-//                    interval:function(index){
-//                        var d = data[index].flag;
-//                        if(d==1){
-//                            return true;
-//                        }
-//                        return false;
-//                    }
-//
-//                }
-//            }
-//        ],
-//        yAxis : [
-//            {
-//                type : 'value',
-//                axisLabel : {
-//                    formatter: '{value}'
-//                }
-//            }
-//        ],
-//        series : [
-//
-//            {
-//                name:'数量',
-//                type:'line',
-//                data: eventCountArray,
-//                symbolSize:0,
-//            },
-//            {
-//                name:'话题事件',
-//                type:'line',
-//                data:eventArray,
-//                symbolSize:0,
-//                markPoint:{
-//                    data:pointData,
-//                    symbolSize:50,
-//                    symbol:'image://images/dialog.png',
-//                    itemStyle:{
-//                        normal:{
-//                            label:{
-//                                distance:5,
-//                                show:true,
-//                                formatter: function (data) {
-//                                    var dataLen = data.value.length/2;
-//                                    if(dataLen > 3){
-//                                        var str = data.value.substr(0,Math.floor(dataLen)) + '\n' +data.value.substr(Math.floor(dataLen))
-//                                    }else {
-//                                        str = data.value;
-//                                    }
-//                                    return data.data.xAxis + '\n' + str + '\n' + '\n' + '\n' + '\n';
-//                                },
-//                                textStyle: {
-//                                    color:'#fff',
-//                                    fontSize: '4',
-//                                    fontFamily: '微软雅黑',
-//                                    fontWeight:'bolder'
-//                                }
-//                            }
-//                        }
-//                    }
-//                },
-//                itemStyle: {
-//                    normal: {
-//                        label: {
-//                            show: true,
-//                            formatter: function (data) {
-//                                return data.data.xAxis
-//                            },
-//                            textStyle: {
-//                                color:'red',
-//                                fontSize: '10',
-//                                fontFamily: '微软雅黑',
-//                                fontWeight:'bolder'
-//                            }
-//                        }
-//                    }
-//                }
-//
-//            }
-//
-//        ]
-//    };
-//
- $("#btn").click(function(){
-     $("#d").attr("href","www.baidu.com");
- })
-</script>
+</head>
 <body>
-<button id="btn">设置</button>
-<a id="d" href="#capo">超链接</a>
+<!-- container start -->
+<div class="container" style="height: 100px; width: 200px;border: 1px solid red;overflow: auto">
+ <div id="text">说不出独生女里的女一滴水大家哦IC多少年路开出几艘船但是内存卡交多少女一滴水紧
+     凑谁都能出来快圣诞节吃剩的扣除您稍等你此生和女的路<a href="#" name="d">跳转到此</a>口VC渐
+     叟啊上档次上次多少次不对是从上次的事航次U盾手IC的时间差点害死你和服从额外航次uhfeiswccID差距
+     送你从事自己从多少年痴呆dfns vnkf时间段内城市都VCID三从地上哦次就上次你肯定是茶几上嘲弄宽度是
+     时拿出来看单女厕</div>
+
+</div>
+<a id="btn" href="#d">按钮</a>
+<!-- container end -->
+
+<script type="text/javascript">
+    $(function(){
+        $("#btn").click(function(){
+           $(".container").scrollTop(500);
+        });
+
+    })
+
+</script>
 </body>
 </html>

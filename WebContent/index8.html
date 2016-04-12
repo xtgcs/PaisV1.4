@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/lib/jquery-2.1.4.min.js"></script>
+    <script src="js/dist/echarts.js"></script>
+    <script src="js/dist/line.js"></script>
+    <script src="js/dist/bar.js"></script>
+</head>
+<script>
+    // 路径配置
+    require.config({
+        paths: {
+            echarts: 'js/dist/'
+        }
+    });
+    // 使用
+    require(
+            [
+                'echarts',
+                'echarts/chart/line',
+//                'echarts/chart/force',
+                'echarts/chart/bar'
+//                'echarts/chart/map'
+            ],
+            function (ec) {
+                var myChart = ec.init(document.getElementById('box'));
+                var option = {
+                    title: {
+                        show: true,
+                        x: 'center',
+                        text: '话题车厢'
+                    },
+                    tooltip: {
+                        show: true,
+                        formatter: '{a}:{c}'
+                    },
+
+                    calculable: false,
+                    xAxis: [
+                        {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: [1,4,6,8,4,3,21,4,9],
+                            axisLabel: {
+                                show: true
+//                                interval: function (index) {
+//                                    var d = data[index].flag;
+//                                    if (d == 1) {
+//                                        return true;
+//                                    }
+//                                    return false;
+//                                }
+
+                            },
+                            axisLine: {
+                                show: false
+                            },
+                            axisTick: {
+                                show: false
+                            }
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value',
+                            axisLabel: {
+                                formatter: '{value}',
+                                show: true
+                            },
+                            axisLine: {
+                                show: false
+                            }
+                        }
+                    ],
+                    series: [
+
+                        {
+                            name: '数量',
+                            type: 'line',
+                            data: [23,54,65,768,98,12,323],
+                            symbolSize: 0,
+                            itemStyle: {
+                                normal: {
+                                    lineStyle: {
+                                        color: '#ee0000'
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            name: '话题事件',
+                            type: 'line',
+                            data: ["北京","天津","上海","西安","咸阳","四川","湖南"],
+                            symbolSize: 0,
+                            itemStyle: {
+                                color: 'red',
+                                normal: {
+                                    lineStyle: {
+                                        color: '#ee0000'
+                                    },
+                                    label: {
+//                                        formatter: function (params) {
+//                                            if (params.data != '') {
+//                                                return params.name + '\n' + params.data;
+//                                            }
+//                                            return '';
+//                                        },
+                                        show: true,
+                                        position: 'top',
+                                        textStyle: {
+                                            color: '#27408B',
+                                            fontSize: '12',
+                                            fontFamily: '微软雅黑',
+                                            fontWeight: 'bolder'
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                };
+                myChart.setOption(option);
+            }
+    );
+
+</script>
+<body>
+<div id="box" style="width: 1000px;height: 400px"></div>
+</body>
+</html>

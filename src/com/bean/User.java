@@ -12,6 +12,7 @@ public class User {
 	private String level;
 	private String location;
 	private int fansnum;
+	private String Sfansnum;
 	private int friendsnum;
 	private int blogsnum;
 	private byte[] headpic;
@@ -40,6 +41,12 @@ public class User {
 //	public void setTaskid(String taskid) {
 //		this.taskid = taskid;
 //	}
+	public String getSfansnum() {
+		return Sfansnum;
+	}
+	public void setSfansnum(String sfansnum) {
+		Sfansnum = sfansnum;
+	}
 	public String getTopic() {
 		return topic;
 	}

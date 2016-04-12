@@ -12,20 +12,23 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import utils.StringUtils;
+
 import com.bean.Blog;
 import com.blog.blogService.BlogService;
 
 @Controller
 public class BlogAction {
 	@Resource
-	BlogService blogService;
+	BlogService blogService;int size=3;
 	@RequestMapping("/getWeibo.do")
 	@ResponseBody
 	public List<Blog> getWeiboList(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
+		request.setCharacterEncoding("UTF-8");
 		String topic = utils.StringUtils.getQueryParam(request.getParameter("topic"));
-		System.out.println(topic);
+		int page=Integer.parseInt(request.getParameter("page"));
 		List<Blog> bloglist = new ArrayList<Blog>();
-		bloglist = blogService.getBlogListByTopic(topic);
+		bloglist = blogService.getBlogListByTopic(topic,page,size);
 //		System.out.println("weibo list:"+bloglist.get(0).getForwardnum());
 		for(Blog blog:bloglist){
 			
@@ -33,5 +36,12 @@ public class BlogAction {
 		}
 		return bloglist;
 	}
-
+	@RequestMapping("/getTotalWeiboPage.do")
+	@ResponseBody
+	public int getTotalPage(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception
+	{
+	  request.setCharacterEncoding("UTF-8");
+	  String topic = StringUtils.getQueryParam(request.getParameter("topic"));
+	  return blogService.getTotalPageByTopic(topic,size);
+	}
 }

@@ -40,5 +40,22 @@ public class ForwardServiceImpl implements ForwardService{
 
 		return returnList;
 	}
+	@Override
+	public List<Forward> getForwardListByTopic(String topic,int page,int size) {
+		if(size < 0){
+			return forwardDao.getForwardListByTopic(topic,page,size);
+		}
+		List<Forward> returnList = new ArrayList<Forward>();
 
+		List<Forward> firstLevel = forwardDao.getForwardListByTopic(topic,page,size);
+		returnList.addAll(firstLevel);
+		return returnList;
+	}
+	@Override
+	public int getTotalPageByTopic(String topic,int size) {
+		// TODO Auto-generated method stub
+		if(topic!=null)
+		 return forwardDao.getTotalPageByTopic(topic,size);
+		return 0;
+	}
 }

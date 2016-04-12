@@ -30,7 +30,7 @@
                             <ul id="ucl"  style="overflow-y:auto">
                                 <script id="uclTpl" type="text/template">
                                     {{#ucl}}
-                                    <li><a href="javascript:;" class="{{active}}"><i></i>{{topic}}</a></li>
+                                    <li><a href="javascript:;" class="{{active}}"><i></i><span>{{topic}}</span></a></li>
                                     {{/ucl}}
                                 </script>
                             </ul>
@@ -40,7 +40,7 @@
                 <!-- 人际关系网 -->
                 <div class="top-right-cont" style="position:relative;">
                     <dl class="tabs enabled" id="tabs2">
-                        <dt class="active">传播路径<!--<i></i>--></dt>
+                        <dt class="active">传播路<!--<i></i>--></dt>
                         <dd class="active">
                             <div id="path" style="z-index: 1;width:600px;height:320px;"></div>
                             <a href="javascript:;" class="path-btn path hide"><span>显示关键路径</span></a>
@@ -89,6 +89,9 @@
                                 </div>
                                 {{/weibo}}
                             </script>
+                        </dd>
+                         <dt id="news_code">新闻编码</dt>
+                        <dd>
                         </dd>
                     </dl>
                 </div>

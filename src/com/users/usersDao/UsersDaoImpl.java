@@ -40,7 +40,13 @@ public class UsersDaoImpl extends BaseDao implements UsersDao {
 		});
 		return list.get(0);
 	}
-
+    private String fansFormat(int fans)
+    {
+      if(fans>9999)
+    	  return String.valueOf(fans/10000)+"万";
+      else
+    	  return String.valueOf(fans);
+    }
 	private ParameterizedRowMapper<User> maps = new ParameterizedRowMapper<User>() {
 		@Override
 		public User mapRow(ResultSet rs, int arg1) throws SQLException {
@@ -49,6 +55,7 @@ public class UsersDaoImpl extends BaseDao implements UsersDao {
 			user.setTopic(rs.getString("topic"));
 			user.setUname(rs.getString("uname"));
 			user.setFansnum(rs.getInt("fansnum"));
+			user.setSfansnum(fansFormat(rs.getInt("fansnum")));
 			user.setFriendsnum(rs.getInt("friendsnum"));
 			user.setBlogsnum(rs.getInt("blogsnum"));
 			user.setTopiceffect(rs.getDouble("topiceffect"));

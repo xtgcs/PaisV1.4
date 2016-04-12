@@ -25,14 +25,25 @@ public class ForwardAction {
 	@Resource
 	UsersService userService;
 	@Resource
-	TrendService trendService;
+	TrendService trendService;int size=10;
 
 	@RequestMapping("/getForwardList.do")
 	@ResponseBody
 	public List<Forward> getForwardList(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
+		request.setCharacterEncoding("UTF-8");
 		String topic = StringUtils.getQueryParam(request.getParameter("topic"));
-
-		return forwardService.getForwardListByTopic(topic,400);
+		int page=Integer.parseInt(request.getParameter("page"));
+		
+        return forwardService.getForwardListByTopic(topic,page,size);
+		//return forwardService.getForwardListByTopic(topic,400);
+	}
+	@RequestMapping("/getTotalPage.do")
+	@ResponseBody
+	public int getTotalPage(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception
+	{
+	  request.setCharacterEncoding("UTF-8");
+	  String topic = StringUtils.getQueryParam(request.getParameter("topic"));
+	  return forwardService.getTotalPageByTopic(topic,size);
 	}
 
 }
