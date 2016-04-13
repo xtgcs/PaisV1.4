@@ -99,6 +99,7 @@ dl.tabs.enabled dd, dl.sub-tabs.enabled dd {
 dl.tabs.enabled dd.active, dl.sub-tabs.enabled dd.active {
     z-index: 0;
     display: block !important;
+
 }
 
 .system-wrap {

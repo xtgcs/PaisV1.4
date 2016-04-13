@@ -1,10 +1,10 @@
 $(function(){
 
     /*外部自定义函数*/
-    dian_close();
-    news_code();
-    news_close();
-    dialog_show();
+    //dian_close();
+    //news_code();
+    //news_close();
+    //dialog_show();
 
 
 	var weiboContent;
@@ -15,7 +15,9 @@ $(function(){
         userInfoUrl = "getUserInfo.do",
         weiboListUrl = "getWeibo.do",
         eventListUrl = "getEventList.do",
-        aspectListUrl = "getAspectList.do";
+        aspectListUrl = "getAspectList.do",
+        totalWeiboPageUrl ="getTotalWeiboPage.do",
+        totalPageUrl="getTotalPage.do",
         hotMapUrl = "getHotmap.do";
     $(document.documentElement).click(function(event){
         if(event.stopPropagation){
@@ -74,153 +76,196 @@ $(function(){
                 genMapList(topic);
                 localStorage.setItem("topic",topic);
             }
-            //话题微博
-            function genWeiboList(topic) {
+            //传播路径总数据量
+            function getTotalPage(topic){
+                var total;
                 $.ajax({
-                    url: weiboListUrl,
-                    data: {topic:topic},
-                    // type: 'post',
-                    dataType: 'json',
-                    success: function(data) {
-                        for ( var i = 0; i < data.length; i++) {
-                            var item = data[i];
-                            item.aspect = getAspect(item.aspect);
-                        }
-                        var template = $('#weiboTpl').html();
-                        var html = Mustache.to_html(template, {'weibo': data});
-                        $('#weiboList').html(html);
-                        //查看全文
-                        for (var j = 0; j < data.length; j++) {
-                            var item1 = data[j];
-                            var d = item1.id;
-                            add(d);
-                        }
-
+                    url:totalPageUrl,
+                    data:{topic:topic},
+                    dataType:'json',
+                    async:false,
+                    success: function(data){
+                        total=data;
                     }
                 });
+                return total;
+            }
+            //话题微博总数据量
+            function getTotalWeiboPage(topic){
+                var total;
+                $.ajax({
+                    url:totalWeiboPageUrl,
+                    data:{topic:topic},
+                    dataType:'json',
+                    async:false,
+                    success: function(data){
+                        total= data;
+                    }
+                });
+                return total;
+            }
+
+            //话题微博
+            function genWeiboList(topic) {
+                var total=getTotalWeiboPage(topic);
+                var weiboHtml = '';
+                for(var k = 1; k < total ; k++){
+                    (function(page){
+                        $.ajax({
+                            url: weiboListUrl,
+                            data: {topic:topic,page:page},
+                            // type: 'post',
+                            dataType: 'json',
+                            success: function(data) {
+
+                                for ( var i = 0; i < data.length; i++) {
+                                    var item = data[i];
+
+                                    item.aspect = getAspect(item.aspect);
+                                }
+                                var template = $('#weiboTpl').html();
+                                var html = Mustache.to_html(template, {'weibo': data});
+                                weiboHtml += html;
+                                //console.log(weiboHtml);
+                                $('#weiboList').html(weiboHtml);
+                                //查看全文
+                                for (var j = 0; j < data.length; j++) {
+                                    var item1 = data[j];
+                                    var d = item1.id;
+
+                                    add(d);
+                                }
+                            }
+                        });
+                    })(k);
+                }
             }
             //传播路径
             function genForwardChart(topic){
+                var total= getTotalPage(topic);
                 var constMaxRadius = 10;
                 var constMinRadius = 5;
-                $.ajax({
-                    url: forwardListUrl,
-                    data: {topic:topic},
-                    // type: 'post',
-                    dataType: 'json',
-                    success: function(data){
-                        var nodesAndLinks = getNodesAndLinks(data);
-                        var nodes = nodesAndLinks.nodes;
-                        if(nodes.length > 0) {
-                            nodes.push({
-                                name: topic,
-                                value: 10,
-                                topic:topic,
-                                symbolSize: [20, 20],
-                                category: 1,
-                                draggable:true
-                            });
+                var pathOption = {
+                    legend:{
+                        x:'right',
+                        data: [
+                            {
+                                icon: 'image://images/positive.png',
+                                name: '正面支持',
+                                textStyle:{color:'rgba(255,140,0,1)'}
+                            },
+                            {
+
+                                icon: 'image://images/neutral.png',
+                                name: '中性中立',
+                                textStyle:{color:'rgba(130,130,130,1)'}
+                            },
+                            {
+
+                                icon: 'image://images/negative.png',
+                                name: '负面否定',
+                                textStyle:{color:'rgba(0,180,255,1)'}
+                            }
+
+                        ],
+                        orient: 'vertical',
+                        selectedMode:false,
+                        selected:{
+                            "正面支持":true,"中性中立":true,"负面否定":true
                         }
-                        var pathOption = {
-                                legend:{
-                                    x:'right',
-                                    data: [
-                                        {
-                                            icon: 'image://images/positive.png',
-                                            name: '正面支持',
-                                            textStyle:{color:'rgba(255,140,0,1)'}
-                                        },
-                                        {
-
-                                            icon: 'image://images/neutral.png',
-                                            name: '中性中立',
-                                            textStyle:{color:'rgba(130,130,130,1)'}
-                                        },
-                                        {
-
-                                            icon: 'image://images/negative.png',
-                                            name: '负面否定',
-                                            textStyle:{color:'rgba(0,180,255,1)'}
-                                        }
-
-                                    ],
-                                    orient: 'vertical',
-                                    selectedMode:false,
-                                    selected:{
-                                        "正面支持":true,"中性中立":true,"负面否定":true
-                                    }
-                                },
-
-                            series : [
+                    },
+                    series : [
+                        {
+                            type:'force',
+                            name : "topic",
+                            ribbonType: false,
+                            draggable: false,
+                            categories:[
+                                {name:"话题"},
                                 {
-                                    type:'force',
-                                    name : "topic",
-                                    ribbonType: false,
-                                    draggable: false,
-                                    scaling: 2.5,
-                                    size:'75%',
-                                    gravity: 3,
-                                    categories:[
-                                        {name:"话题"},
-                                        {
-                                            name:"转发",
-                                            itemStyle: {
-                                                normal: {
-                                                    color: "white",
-                                                    borderColor: " rgba(0,180,255,1)",
-                                                    borderWidth: 6
-                                                }
-                                            }
-                                        },
-                                        {name: '正面支持'},
-                                        {name: '中性中立'},
-                                        {name: '负面否定'}
-
-
-                                    ],
+                                    name:"转发",
                                     itemStyle: {
                                         normal: {
-                                            label: {
-                                                show: false
-                                            },
-                                            nodeStyle : {
-                                                brushType : 'both',
-                                                borderColor : 'rgba(91,207,255,1)',
-                                                borderWidth : 1,
-                                                color: 'rgba(0,180,255,1)'
-                                            }
-                                        },
-                                        emphasis: {
-                                            label: {
-                                                show: false
-                                            },
-                                            nodeStyle : {
-                                                brushType : 'both',
-                                                borderColor : 'rgba(255,240,0,1)',
-                                                borderWidth : 2,
-                                                color: 'rgba(255,168,0,1)'
-                                            }
+                                            color: "white",
+                                            borderColor: " rgba(0,180,255,1)",
+                                            borderWidth: 6
                                         }
-                                    },
-                                    minRadius : constMinRadius,
-                                    maxRadius : constMaxRadius,
-                                    linkSymbol: 'arrow',
-                                    coolDown: 0.995,
-                                    nodes : nodes,
-                                    links : nodesAndLinks.links,
-                                    //当支持web Worker的时候会有效
-                                    steps: 30,
-                                    large: true,
-                                    useWorker: true
-
+                                    }
                                 }
-                            ]
-                        };
-                        var myChartPath = ec.init(document.getElementById('path'), 'blue');
-                        myChartPath.setOption(pathOption);
-                        myChartPath.on(ecConfig.EVENT.CLICK, eConsole);
-                    }
-                });
+
+                            ],
+                            itemStyle: {
+                                normal: {
+                                    label: {
+                                        show: false
+                                    },
+                                    nodeStyle : {
+                                        brushType : 'both',
+                                        borderColor : 'rgba(91,207,255,1)',
+                                        borderWidth : 1,
+                                        color: 'rgba(0,180,255,1)'
+                                    }
+                                },
+                                emphasis: {
+                                    label: {
+                                        show: false
+                                    },
+                                    nodeStyle : {
+                                        brushType : 'both',
+                                        borderColor : 'rgba(255,240,0,1)',
+                                        borderWidth : 2,
+                                        color: 'rgba(255,168,0,1)'
+                                    }
+                                }
+                            },
+                            minRadius : constMinRadius,
+                            maxRadius : constMaxRadius,
+                            linkSymbol: 'arrow',
+                            coolDown: 0.995,
+                            //当支持web Worker的时候会有效
+                            steps: 30,
+                            large: true,
+                            useWorker: true
+                        }
+                    ]
+                };
+                var nodesLinks = [];
+                var nodesNodes = [];
+                for(var i = 0; i < total ; i++){
+                    (function(page){
+                        $.ajax({
+                            url: forwardListUrl,
+                            data: {topic:topic,page:page},
+                            // type: 'post',
+                            dataType: 'json',
+                            success: function(data) {
+                                var nodesAndLinks = getNodesAndLinks(data);
+                                var nodes = nodesAndLinks.nodes;
+                                nodesLinks = nodesLinks.concat(nodesAndLinks.links);
+                                nodesNodes = nodesNodes.concat(nodes);
+                                if (nodesNodes.length > 0) {
+                                    nodesNodes.push({
+                                        name: topic,
+                                        value: 10,
+                                        topic: topic,
+                                        symbolSize: [20, 20],
+                                        category: 1,
+                                        draggable: true
+                                    });
+                                }
+                                if (page == total-1) {
+                                    // console.log(nodesLinks);
+                                    // console.log(nodesNodes);
+                                    pathOption.series[0].nodes = nodesNodes;
+                                    pathOption.series[0].links = nodesLinks;
+                                    var myChartPath = ec.init(document.getElementById('path'), 'blue');
+                                    myChartPath.setOption(pathOption);
+                                    myChartPath.on(ecConfig.EVENT.CLICK, eConsole);
+                                }
+                            }
+                        });
+                    })(i);
+                }
             }
             //map
             function genMapList(topic){
@@ -779,7 +824,6 @@ function change(){
     $("#pass1").removeClass().attr("style","z-index:0").attr("style","display:none");
     $("#show1").addClass("active").attr("style","z-index:1;display:block");
     $("#map1").removeClass().attr("style","z-index:0").attr("style","display:none");
-    $("#weiboList").scrollTop(-300);
     pass.click(function(){
         $(this).addClass("active");
         $("#show").removeClass();
@@ -793,168 +837,168 @@ function change(){
 
 
 
-
-function news_code(){
-
-    $(".bottom_left").click(function(){
-        var news_block_num = $(".bottom_left").index(this);
-        $('.link_news_time').eq(news_block_num).slideDown("slow",function(){
-            
-        });
-        $(".bottom_left").eq(news_block_num).css("display","none");
-        $(".bottom_left_close").eq(news_block_num).fadeIn("slow");
-    });
-    
-    
-}
-
-function news_close(){
-    $(".bottom_left_close").click(function(){
-        var news_block_num = $(".bottom_left_close").index(this);
-        $('.link_news_time').eq(news_block_num).slideUp("slow");
-        $(".bottom_left_close").eq(news_block_num).css("display","none");
-        $(".bottom_left").eq(news_block_num).fadeIn("slow");
-    });
-    
-    
-}
-
-function dian_close(){
-    $(".top_close").click(function(){
-        var num = $(".top_close").index(this);
-        // var box_height = $(".time_output").eq(num).height();
-        // $(".time_output").eq(num).css({
-        //     "height":box_height,
-        // });
-        $(".time_select_right").eq(num).slideUp("slow");
-        $(".top_close").eq(num).css("display","none");
-        $(".top_open").eq(num).css("display","block");
-
-        
-        if(num == 3){
-            $('.embed_box embed').eq(0).remove();
-            $('.video_play_block').eq(0).hide();
-            $('.icos_play').eq(0).show();
-        }else if(num == 5){
-            $('.embed_box embed').eq(1).remove();
-            $('.video_play_block').eq(1).hide();
-            $('.icos_play').eq(1).show();
-        }
-
-       
-        
-    });
-
-
-    $(".top_open").click(function(){
-        var num = $(".top_open").index(this);
-        $(".time_select_right").eq(num).slideDown("slow");
-        $(".top_open").eq(num).css("display","none");
-        $(".top_close").eq(num).css("display","block");
-        
-    });
-}
-
-
-
-function dialog_show(){
-    $('.right_push').click(function(){
-        var text_num = $('.right_push').index(this);
-        var text_main = $('.center_main').eq(text_num).html();
-        $('#dialog_bottom').css("display","block");
-        $('#dialog_show').css("display","block");
-        $('#dialog_show .showIn').html(text_main);
-    });
-
-    $('.time_main_all').click(function(){
-        var text_num = $('.time_main_all').index(this);
-        var text_main = $('.list_center_main').eq(text_num).html();
-        $('#dialog_bottom').css("display","block");
-        $('#dialog_show').css("display","block");
-        $('#dialog_show .showIn').append(text_main);
-        
-
-        if(text_num == 3){
-            $('.embed_box embed').eq(0).remove();
-            $('.video_play_block').eq(0).hide();
-            $('.icos_play').eq(0).show();
-        }else if(text_num == 5){
-            $('.embed_box embed').eq(0).remove();
-            $('.video_play_block').eq(1).hide();
-            $('.icos_play').eq(1).show();
-        }else{
-            $('.embed_box embed').remove();
-            $('.video_play_block').hide();
-            $('.icos_play').show();
-        }
-
-         $('.video_play').css("width","510px");
-         $('.line').css("color","#666");
-
-    });
-
-
-    $('.icos_play').click(function(){
-        
-
-        var play_num = $('.icos_play').index(this);
-        var embed_main1 = "<embed class=\"video_play\"  src=\"http://v.ifeng.com/include/exterior.swf?guid=01728f5d-6f49-477e-8e6b-400f5109e378&fromweb=sinaLinkCard&AutoPlay=true\"   autostart=false allowFullScreen=ture type=\"application/x-shockwave-flash\" style=\"border-radius: 5px; box-shadow: 2px 2px 5px rgba(0, 0, 0, .5); \"/>";
-        var embed_main2 = "<embed class=\"video_play\"  src=\"http://v.ifeng.com/include/exterior.swf?guid=01728f5d-6f49-477e-8e6b-400f5109e378&fromweb=sinaLinkCard&AutoPlay=true\"   autostart=false allowFullScreen=ture type=\"application/x-shockwave-flash\" style=\"border-radius: 5px; box-shadow: 2px 2px 5px rgba(0, 0, 0, .5); \"/>";
-       
-
-
-        $('.icos_play').eq(play_num).css("display","none");
-        $('.video_play_block').eq(play_num).fadeIn("slow");
-
-
-        if(play_num == 0){
-            $('.embed_box').eq(0).append(embed_main1);
-        }else if(play_num == 1){
-            $('.embed_box').eq(1).append(embed_main2);
-        }
-        
-
-        // var num = $(".icos_play").index(this);
-        // var box_height = $(".time_output").eq(num).height();
-        // $(".time_output").eq(num).css({
-        //     "height":box_height,
-        // });
-
-        
-    });
-
-    $('.video_play_close').click(function(){
-        
-        var play_num = $('.video_play_close').index(this);
-
-        if(play_num == 0){
-            $('.embed_box embed').remove();
-        }else if(play_num == 1){
-            $('.embed_box embed').remove();
-        }
-
-        
-        $('.video_play_block').eq(play_num).fadeOut();
-        $('.icos_play').eq(play_num).fadeIn("slow");
-        
-
-    
-
-        // var num = $(".video_play_close").index(this);
-        // var box_height = $(".time_output").eq(num).height();
-        // $(".time_output").eq(num).css({
-        //     "height":box_height,
-        // });
-        
-    });
-
-    $('.dialog_clost').click(function(){
-        $('#dialog_bottom').css("display","none");
-        $('#dialog_show').css("display","none");
-         $('#dialog_show .showIn div').remove();
-
-         $('.video_play').css("width","390px");
-
-         $('.line').css("color","#ccc");
-    });
-}
+//
+//function news_code(){
+//
+//    $(".bottom_left").click(function(){
+//        var news_block_num = $(".bottom_left").index(this);
+//        $('.link_news_time').eq(news_block_num).slideDown("slow",function(){
+//
+//        });
+//        $(".bottom_left").eq(news_block_num).css("display","none");
+//        $(".bottom_left_close").eq(news_block_num).fadeIn("slow");
+//    });
+//
+//
+//}
+//
+//function news_close(){
+//    $(".bottom_left_close").click(function(){
+//        var news_block_num = $(".bottom_left_close").index(this);
+//        $('.link_news_time').eq(news_block_num).slideUp("slow");
+//        $(".bottom_left_close").eq(news_block_num).css("display","none");
+//        $(".bottom_left").eq(news_block_num).fadeIn("slow");
+//    });
+//
+//
+//}
+//
+//function dian_close(){
+//    $(".top_close").click(function(){
+//        var num = $(".top_close").index(this);
+//        // var box_height = $(".time_output").eq(num).height();
+//        // $(".time_output").eq(num).css({
+//        //     "height":box_height,
+//        // });
+//        $(".time_select_right").eq(num).slideUp("slow");
+//        $(".top_close").eq(num).css("display","none");
+//        $(".top_open").eq(num).css("display","block");
+//
+//
+//        if(num == 3){
+//            $('.embed_box embed').eq(0).remove();
+//            $('.video_play_block').eq(0).hide();
+//            $('.icos_play').eq(0).show();
+//        }else if(num == 5){
+//            $('.embed_box embed').eq(1).remove();
+//            $('.video_play_block').eq(1).hide();
+//            $('.icos_play').eq(1).show();
+//        }
+//
+//
+//
+//    });
+//
+//
+//    $(".top_open").click(function(){
+//        var num = $(".top_open").index(this);
+//        $(".time_select_right").eq(num).slideDown("slow");
+//        $(".top_open").eq(num).css("display","none");
+//        $(".top_close").eq(num).css("display","block");
+//
+//    });
+//}
+//
+//
+//
+//function dialog_show(){
+//    $('.right_push').click(function(){
+//        var text_num = $('.right_push').index(this);
+//        var text_main = $('.center_main').eq(text_num).html();
+//        $('#dialog_bottom').css("display","block");
+//        $('#dialog_show').css("display","block");
+//        $('#dialog_show .showIn').html(text_main);
+//    });
+//
+//    $('.time_main_all').click(function(){
+//        var text_num = $('.time_main_all').index(this);
+//        var text_main = $('.list_center_main').eq(text_num).html();
+//        $('#dialog_bottom').css("display","block");
+//        $('#dialog_show').css("display","block");
+//        $('#dialog_show .showIn').append(text_main);
+//
+//
+//        if(text_num == 3){
+//            $('.embed_box embed').eq(0).remove();
+//            $('.video_play_block').eq(0).hide();
+//            $('.icos_play').eq(0).show();
+//        }else if(text_num == 5){
+//            $('.embed_box embed').eq(0).remove();
+//            $('.video_play_block').eq(1).hide();
+//            $('.icos_play').eq(1).show();
+//        }else{
+//            $('.embed_box embed').remove();
+//            $('.video_play_block').hide();
+//            $('.icos_play').show();
+//        }
+//
+//         $('.video_play').css("width","510px");
+//         $('.line').css("color","#666");
+//
+//    });
+//
+//
+//    $('.icos_play').click(function(){
+//
+//
+//        var play_num = $('.icos_play').index(this);
+//        var embed_main1 = "<embed class=\"video_play\"  src=\"http://v.ifeng.com/include/exterior.swf?guid=01728f5d-6f49-477e-8e6b-400f5109e378&fromweb=sinaLinkCard&AutoPlay=true\"   autostart=false allowFullScreen=ture type=\"application/x-shockwave-flash\" style=\"border-radius: 5px; box-shadow: 2px 2px 5px rgba(0, 0, 0, .5); \"/>";
+//        var embed_main2 = "<embed class=\"video_play\"  src=\"http://v.ifeng.com/include/exterior.swf?guid=01728f5d-6f49-477e-8e6b-400f5109e378&fromweb=sinaLinkCard&AutoPlay=true\"   autostart=false allowFullScreen=ture type=\"application/x-shockwave-flash\" style=\"border-radius: 5px; box-shadow: 2px 2px 5px rgba(0, 0, 0, .5); \"/>";
+//
+//
+//
+//        $('.icos_play').eq(play_num).css("display","none");
+//        $('.video_play_block').eq(play_num).fadeIn("slow");
+//
+//
+//        if(play_num == 0){
+//            $('.embed_box').eq(0).append(embed_main1);
+//        }else if(play_num == 1){
+//            $('.embed_box').eq(1).append(embed_main2);
+//        }
+//
+//
+//        // var num = $(".icos_play").index(this);
+//        // var box_height = $(".time_output").eq(num).height();
+//        // $(".time_output").eq(num).css({
+//        //     "height":box_height,
+//        // });
+//
+//
+//    });
+//
+//    $('.video_play_close').click(function(){
+//
+//        var play_num = $('.video_play_close').index(this);
+//
+//        if(play_num == 0){
+//            $('.embed_box embed').remove();
+//        }else if(play_num == 1){
+//            $('.embed_box embed').remove();
+//        }
+//
+//
+//        $('.video_play_block').eq(play_num).fadeOut();
+//        $('.icos_play').eq(play_num).fadeIn("slow");
+//
+//
+//
+//
+//        // var num = $(".video_play_close").index(this);
+//        // var box_height = $(".time_output").eq(num).height();
+//        // $(".time_output").eq(num).css({
+//        //     "height":box_height,
+//        // });
+//
+//    });
+//
+//    $('.dialog_clost').click(function(){
+//        $('#dialog_bottom').css("display","none");
+//        $('#dialog_show').css("display","none");
+//         $('#dialog_show .showIn div').remove();
+//
+//         $('.video_play').css("width","390px");
+//
+//         $('.line').css("color","#ccc");
+//    });
+//}

@@ -94,12 +94,11 @@
                             {{/weibo}}
                         </script>
                         </dd>
-                        
+
                         <dt id="news_code">新闻编码</dt>
                         <dd id="news_code_show">
                         	<div id="list_show" style="z-index: 1;width:600px;height:340px;overflow-y: auto;">
                         		<div class="list_show_main list_show1">
-
 
 	                        		<div class="center_main">
 	                        			<div class="list_show_top">
@@ -114,8 +113,6 @@
 	                        			<div class="news_main_pic" style="overflow:hidden">
 			                        		<img src="http://ww1.sinaimg.cn/bmiddle/7198dd2fgw1f0ajiqvg6oj20hr0dotc2.jpg" width="563px" height="240px">
 			                        	</div>
-
-
 	                        			<!--页面下方评论/点赞-->
 	                        			<div class="WB_feed_handle">
 		                                    <div class="WB_handle">
@@ -133,10 +130,7 @@
 		                                    </div>
 		                                    <div node-type="feed_list_repeat" class="WB_feed_repeat S_bg1" style="display:none;"></div>
 		                                </div>
-
-		                                
 	                        		</div>
-
                         			<div class="list_show_bottom">
                         				<div class="bottom_left">
                         					梳理相关政策，请展开阅读
@@ -152,8 +146,6 @@
                         				<div class="time_output">
 	                        				<div class="time_main time_main_01">
 	                        				<img src="images/shijiandian.png"  class="time_dot time_dot1" title="每日经济新闻">
-
-
 	                        				<!--收拉框-->
 	                        					<div class="top_fix">
 	                        						<div class="top_time">2016年3月12日</div>
@@ -173,9 +165,6 @@
 			                        					<div class="time_main_neirong">
 			                        						【五大重点绘出“十三五”清晰路线图】2016年的中国两会承载着“十三五”开好局的使命，也肩负着2020年全面小康的重任。所以李克强总理今年的政府工作报告就显得特别重要，因为“十三五”这五年怎么干，很大程度上就看报告给出的路线图。那么，今年两会政府工作报告的重点是什么？
 			                        					</div>
-
-
-
 			                        					<!--页面下方评论/点赞-->
 					                        			<div class="WB_feed_handle">
 						                                    <div class="WB_handle" >
@@ -281,9 +270,6 @@
 			                        					<div class="time_main_neirong">
 			                        						今日节目：实现全面脱贫，是全面建成小康社会重要任务。政府报告就“实施精准扶贫、精准脱贫”、“扩大贫困地区基础设施覆盖面”、“实行脱贫工作责任制”、“提高贫困地区基础教育质量和医疗服务水平”，做出了重要的战略部署。代表委员反响热烈，纷纷结合自己的工作实际建言献策。
 			                        					</div>
-
-
-
 			                        					<!--页面下方评论/点赞-->
 					                        			<div class="WB_feed_handle">
 						                                    <div class="WB_handle">
@@ -301,8 +287,6 @@
 						                                    </div>
 						                                    <div node-type="feed_list_repeat" class="WB_feed_repeat S_bg1" style="display:none;"></div>
 						                                </div>
-
-						                                
 			                        				</div>
 
 		                        					<div class="time_main_bottom">
@@ -316,7 +300,6 @@
 	                        			<div class="time_output">
 	                        				<div class="time_main time_main_04">
 	                        				<img src="images/shijiandian.png"  class="time_dot time_dot4" title="海口苏">
-
 	                        				<!--收拉框-->
 	                        					<div class="top_fix">
 	                        						<div class="top_time">2016年3月10日</div>
@@ -324,7 +307,6 @@
 	                        						<div class="top_close time_close" style="display:none">收起</div>
 	                        						<div class="top_open" style="display:block">展开</div>
 	                        					</div>
-
 	                        					<div class="time_select_right" style="display:none">
 
 		                        					<div class="list_center_main">
@@ -336,9 +318,7 @@
 			                        					<div class="time_main_neirong">
 			                        						#凤凰视频客户端视频推荐# 2016-03-10石评大财经 汇市楼市是打断全面建成小康的两大风险 |2016-03-10... （分享自@凤凰视频客户端）
 			                        					</div>
-
 			                        					<!--页面视频插入和播放的位置-->
-
 			                        					<div class="icos_play" style="display:block" alt="播放"></div>
 
 			                        					<div class="video_play_block" style="display:none">
@@ -350,9 +330,6 @@
 			                        						<embed class="video_play"  src="http://v.ifeng.com/include/exterior.swf?guid=01728f5d-6f49-477e-8e6b-400f5109e378&fromweb=sinaLinkCard&AutoPlay=true"   autostart=false style="border-radius: 5px; box-shadow: 2px 2px 5px rgba(0, 0, 0, .5); "/>
 			                        						-->
 			                        					</div>
-
-
-
 			                        					<!--页面下方评论/点赞-->
 					                        			<div class="WB_feed_handle">
 						                                    <div class="WB_handle">
@@ -370,12 +347,7 @@
 						                                    </div>
 						                                    <div node-type="feed_list_repeat" class="WB_feed_repeat S_bg1" style="display:none;"></div>
 						                                </div>
-
-						                                
 			                        				</div>
-
-
-
 		                        					<div class="time_main_bottom">
 		                        						
 		                        						<div class="time_main_all">查看全文</div>
@@ -406,9 +378,6 @@
 			                        					<div class="time_main_neirong">
 			                        						【新华社评论员：脱贫攻坚，民族地区不能掉队】全面建成小康社会，一个民族都不能少。全国14个连片特困地区有680个县，民族自治地方占54.6%。民族地区是短板中的短板，脱贫攻坚主战场。只有做到精准扶贫、精准脱贫，精准到户、精准到人，严格保护生态，发展特色产业，发挥民族团结优势，才能共筑全面小康。
 			                        					</div>
-
-
-
 			                        					<!--页面下方评论/点赞-->
 					                        			<div class="WB_feed_handle">
 						                                    <div class="WB_handle">
@@ -426,22 +395,16 @@
 						                                    </div>
 						                                    <div node-type="feed_list_repeat" class="WB_feed_repeat S_bg1" style="display:none;"></div>
 						                                </div>
-
-						                                
 			                        				</div>
-
 		                        					<div class="time_main_bottom">
-		                        						
 		                        						<div class="time_main_all">查看全文</div>
 		                        					</div>
 		                        				</div>
 	                        				</div>
 	                        			</div>
-
 	                        			<div class="time_output">
 	                        				<div class="time_main time_main_06">
 	                        				<img src="images/shijiandian.png"  class="time_dot time_dot6" title="石评大财经">
-
 	                        				<!--收拉框-->
 	                        					<div class="top_fix">
 	                        						<div class="top_time">2016年3月6日</div>
@@ -449,9 +412,7 @@
 	                        						<div class="top_close time_close" style="display:none">收起</div>
 	                        						<div class="top_open" style="display:block">展开</div>
 	                        					</div>
-
 	                        					<div class="time_select_right" style="display:none">
-
 		                        					<div class="list_center_main">
 			                        					<div class="time_main_tilte">
 			                        						<img src="http://tp2.sinaimg.cn/1971925837/50/1297828585/0" title="石评大财经" class="head_pic">
@@ -461,21 +422,15 @@
 			                        					<div class="time_main_neirong">
 			                        						石評大財經完整視頻 :汇市楼市是打断全面建成小康的两大风险本保证。四川省委要坚决打一场惩贪治腐、刷新吏治的攻坚战持久战，为决胜全面小康、建设经济强省提供坚强保证
 			                        					</div>
-
 			                        					<!--页面视频插入和播放的位置-->
-
 			                        					<div class="icos_play" style="display:block"></div>
-
 			                        					<div class="video_play_block" style="display:none">
-			                        						
 			                        						<div class="video_play_close">关闭</div>
 			                        						<div class="embed_box"></div>
 			                        						<!-- embed_main2 的位置
 			                        						<embed class="video_play"  src="http://v.ifeng.com/include/exterior.swf?guid=01728f5d-6f49-477e-8e6b-400f5109e378&fromweb=sinaLinkCard&AutoPlay=true"   autostart=false allowFullScreen=ture type="application/x-shockwave-flash"/>
 			                        						-->
 			                        					</div>
-
-
 			                        					<!--页面下方评论/点赞-->
 					                        			<div class="WB_feed_handle">
 						                                    <div class="WB_handle">
@@ -493,24 +448,17 @@
 						                                    </div>
 						                                    <div node-type="feed_list_repeat" class="WB_feed_repeat S_bg1" style="display:none;"></div>
 						                                </div>
-
-						                                
 			                        				</div>
-
-
-
 		                        					<div class="time_main_bottom">
-		                        						
+
 		                        						<div class="time_main_all">查看全文</div>
 		                        					</div>
 		                        				</div>
 	                        				</div>
 	                        			</div>
-
 	                        			<div class="time_output">
 	                        				<div class="time_main time_main_07">
 	                        				<img src="images/shijiandian.png"  class="time_dot time_dot7" title="上七下">
-
 	                        				<!--收拉框-->
 	                        					<div class="top_fix">
 	                        						<div class="top_time">2016年2月29日</div>
@@ -530,14 +478,10 @@
 			                        					<div class="time_main_neirong">
 			                        						房产两个部分可以立竿见影，短痛是贫富差距的协调，但在全面小康的主旨下，有望定向扶贫。两个部分，一是别墅群和限高层的高端公寓的放开，二是REITs，目前只有184801，去年目标分红约6%，实际实现达3%的回报。目前只有万科一家，问题是长远呢，体量很大的市场。
 			                        					</div>
-
 			                        					<!--页面图片插入和播放的位置-->
-
 			                        					<div class="main_pic" style="overflow:hidden">
 			                        						<img src="http://ww1.sinaimg.cn/bmiddle/85b24ef6gw1f0cpml4oeuj20h90b0abf.jpg">
 			                        					</div>
-
-
 			                        					<!--页面下方评论/点赞-->
 					                        			<div class="WB_feed_handle">
 						                                    <div class="WB_handle">
@@ -555,23 +499,16 @@
 						                                    </div>
 						                                    <div node-type="feed_list_repeat" class="WB_feed_repeat S_bg1" style="display:none;"></div>
 						                                </div>
-
-						                                
 			                        				</div>
-
-
 		                        					<div class="time_main_bottom">
-		                        						
 		                        						<div class="time_main_all">查看全文</div>
 		                        					</div>
 		                        				</div>
 	                        				</div>
 	                        			</div>
-
 	                        			<div class="time_output">
 	                        				<div class="time_main time_main_08">
 	                        				<img src="images/shijiandian.png"  class="time_dot time_dot8" alt="四川发布">
-
 	                        				<!--收拉框-->
 	                        					<div class="top_fix">
 	                        						<div class="top_time">2016年2月22日</div>
@@ -579,7 +516,6 @@
 	                        						<div class="top_close time_close" style="display:none">收起</div>
 	                        						<div class="top_open" style="display:block">展开</div>
 	                        					</div>
-
 	                        					<div class="time_select_right" style="display:none">
 
 		                        					<div class="list_center_main">
@@ -591,15 +527,11 @@
 			                        					<div class="time_main_neirong">
 			                        						【遂宁：决战决胜全面小康，建设绿色经济强市[给力]】#我与四川的五年之约# 到2018年农村贫困人口全部脱贫、累计新增就业16.5万人、重点培育品牌组织500个……新出炉的民生大礼包你都收到了吗？未来五年，你和遂宁，约吗[嘻嘻]？@遂宁发布
 			                        					</div>
-
 			                        					<!--页面图片插入和播放的位置-->
-
 			                        					<div class="main_pic" style="overflow:hidden">
 			                        						<img src="http://ww1.sinaimg.cn/bmiddle/7198dd2fgw1f0ajiqvg6oj20hr0dotc2.jpg">
 			                        						<img src="http://ww4.sinaimg.cn/bmiddle/7198dd2fgw1f0ajitw38yj20hs0p1wkf.jpg">
 			                        					</div>
-
-
 			                        					<!--页面下方评论/点赞-->
 					                        			<div class="WB_feed_handle">
 						                                    <div class="WB_handle">
@@ -617,22 +549,16 @@
 						                                    </div>
 						                                    <div node-type="feed_list_repeat" class="WB_feed_repeat S_bg1" style="display:none;"></div>
 						                                </div>
-
-						                                
 			                        				</div>
-
 		                        					<div class="time_main_bottom">
-		                        						
 		                        						<div class="time_main_all">查看全文</div>
 		                        					</div>
 		                        				</div>
 	                        				</div>
 	                        			</div>
-
 	                        			<div class="time_output">
 	                        				<div class="time_main time_main_09">
 	                        				<img src="images/shijiandian.png"  class="time_dot time_dot9" alt="鄂托克旗共青团">
-
 	                        				<!--收拉框-->
 	                        					<div class="top_fix">
 	                        						<div class="top_time">2016年2月19日</div>
@@ -640,7 +566,6 @@
 	                        						<div class="top_close time_close" style="display:none">收起</div>
 	                        						<div class="top_open" style="display:block">展开</div>
 	                        					</div>
-
 	                        					<div class="time_select_right" style="display:none">
 		                        					<div class="list_center_main">
 			                        					<div class="time_main_tilte">
@@ -651,7 +576,6 @@
 			                        					<div class="time_main_neirong">
 			                        						#青年看两会# 政府工作报告既是一份报告书也是一份计划案；既是一份责任状也是一份动员令。需要全体党员干部以求真务实的态度深入贯彻落实，更需要全国各族人民精诚团结，齐心协力，共同为决胜全面小康贡献出自己的力量。@共青团中央 @内蒙古自治区团委 @鄂尔多斯市共青团
 			                        					</div>
-
 			                        					<!--页面下方评论/点赞-->
 					                        			<div class="WB_feed_handle">
 						                                    <div class="WB_handle">
@@ -669,12 +593,8 @@
 						                                    </div>
 						                                    <div node-type="feed_list_repeat" class="WB_feed_repeat S_bg1" style="display:none;"></div>
 						                                </div>
-
-						                                
 			                        				</div>
-
 		                        					<div class="time_main_bottom">
-		                        						
 		                        						<div class="time_main_all">查看全文</div>
 		                        					</div>
 		                        				</div>
@@ -682,12 +602,7 @@
 	                        			</div>
 	                        		</div>
                         		</div>
-
-
-
                         	</div>
-
-
                         	<!--用于弹幕显示的内容-->
                         	<div id="dialog_bottom"></div>
                         	<div id="dialog_show" style="z-index: 10;width:580px;max-height:600px;overflow-y: auto;">
@@ -695,7 +610,6 @@
                         		<div class="dialog_clost"></div>  <!--关闭按钮-->
                         		<!-- <img src="images/close_black.png" width="30px" height="30px" style="float:right;display:block; cursor:pointer;" class="dialog_clost"> -->
                         		<div class="showIn" style="float:left;display:block;margin-bottom:20px;"></div>
-
                         	</div>
                         </dd>
                         <!--TODO:需要更改的map标签名-->
@@ -741,7 +655,7 @@
                             <div class="effect-cont">
                                 <div class="grid">
                                     <span>粉丝</span>
-                                    <b>{{fansnum}}</b>
+                                    <b>{{sfansnum}}</b>
                                 </div>
                                 <div class="grid">
                                     <span>关注</span>
@@ -795,7 +709,7 @@
     <div class="effect-cont">
         <div class="grid">
             <span>粉丝</span>
-            <b>{{fansnum}}</b>
+            <b>{{sfansnum}}</b>
         </div>
         <div class="grid">
             <span>关注</span>
@@ -835,7 +749,7 @@
 <script type="text/javascript" src="js/lib/mustache.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
 <script type="text/javascript" src="js/dist/echarts.js"></script>
-        <script type="text/javascript" src="js/dist/line.js"></script>
+		<script type="text/javascript" src="js/dist/line.js"></script>
     <script type="text/javascript" src="js/dist/force.js"></script>
         <script type="text/javascript" src="js/dist/bar.js"></script>
         <script type="text/javascript" src="js/dist/map.js"></script>
